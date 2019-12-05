@@ -1,8 +1,10 @@
 from django.urls import path
-from search.views import SearchView
+from search.views import (
+    SearchProductView,
+)
 
 app_name = 'search'
 
 urlpatterns = [
-    path('', SearchView.as_view(), name='search'),
+    path('', SearchProductView.as_view(), name='query'),
 ]

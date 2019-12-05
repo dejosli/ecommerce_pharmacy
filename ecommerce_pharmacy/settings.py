@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'core',
     'blog',
     'search',
+    'tag',
 ]
 
 MIDDLEWARE = [

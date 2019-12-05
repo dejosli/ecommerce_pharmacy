@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class='row  mb-3'>
+    {% if query %}
+    <div class='col-12'>
+        Results for <b>{{ query }}</b>
+        <hr />
+    </div>
+
+    <div class='col-12 col-md-6 mx-auto py-5'>
+        <form method='GET' action='{% url "search:query" %}' class="form my-2 my-lg-0">
+            <div class='input-group'>
+                <input class="form-control" type="text" placeholder="Search" name='q' aria-label="Search"
+                    value='{{ request.GET.q }}'>
+                <span class='input-group-btn'>
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </span>
+            </div>
+        </form>
+
+    </div>
+    <div class='col-12'>
+        <hr>
+    </div>
+    {% endif %}
+</div>
+
+
+<div class='row'>
+
+
+
+{% for item in object_list %}
+    <div class='col'>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card">
+
+                <div class="view overlay">
+                    {% comment %} <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12.jpg"
+                        class="card-img-top" {% endcomment %} <img src="{{ item.image.url }}" class="card-img-top">
+                    <a href="{{ item.get_absolute_url }}">
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                </div>
+
+                <div class="card-body text-center">
+                    <a href="" class="grey-text">
+                        <h5>{{ item.get_category_display }}</h5>
+                    </a>
+                    <h5>
+                        <strong>
+                            <a href="{{ item.get_absolute_url }}" class="dark-grey-text">{{ item.title }}
+                                <span class="badge badge-pill {{ item.get_label_display }}-color">NEW</span>
+                            </a>
+                        </strong>
+                    </h5>
+
+                    <h4 class="font-weight-bold blue-text">
+                        <strong>$
+                            {% if item.discount_price %}
+                            {{ item.discount_price }}
+                            {% else %}
+                            {{ item.price }}
+                            {% endif %}
+                        </strong>
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% if forloop.counter|divisibleby:3 %}
+    </div>
+</div>
+<div class='row'>
+    <div class='col-12'>
+        <hr />
+    </div>
+    {% elif forloop.counter|divisibleby:2 %}
+</div>
+</div>
+<div class='row'>
+    <div class='col-12'>
+        <hr />
+    </div>
+    {% else %}
+</div>
+{% endif %}
+
+
+{% endfor %}
+</div>
+{% endblock %}

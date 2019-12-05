@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db.models import Sum
 from django.shortcuts import reverse
 from django_countries.fields import CountryField
+from django.db.models import Q
 
 # Create your models here.
 
@@ -72,8 +73,45 @@ class UserProfile(models.Model):
         return self.user.username
 
 
+class ItemQuerySet(models.query.QuerySet):
+    def active(self):
+        return self.filter(active=True)
+
+    def featured(self):
+        return self.filter(featured=True, active=True)
+
+    def search(self, query):
+        lookups = (Q(title__icontains=query) |
+                   Q(description__icontains=query) |
+                   Q(price__icontains=query) |
+                   Q(category__icontains=query)
+                   )
+
+        return self.filter(lookups).distinct()
+
+
+class ItemManager(models.Manager):
+    def get_queryset(self):
+        return ItemQuerySet(self.model, using=self._db)
+
+    def all(self):
+        return self.get_queryset().active()
+
+    def featured(self):  
+        return self.get_queryset().featured()
+
+    def get_by_id(self, id):
+        # Product.objects == self.get_queryset()
+        qs = self.get_queryset().filter(id=id)
+        if qs.count() == 1:
+            return qs.first()
+        return None
+
+    def search(self, query):
+        return self.get_queryset().active().search(query)
+
 class Item(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=120)
     price = models.FloatField()
     discount_price = models.FloatField(blank=True, null=True)
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=2)
@@ -81,6 +119,10 @@ class Item(models.Model):
     slug = models.SlugField()
     description = models.TextField()
     image = models.ImageField()
+    featured = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
+
+    objects = ItemManager()
 
     def __str__(self):
         return self.title

@@ -4,11 +4,11 @@ from django.views.generic import ListView
 from core.models import Item
 
 # Create your views here.
-class SearchView(ListView):
-    template_name = "layout/search.html"
+class SearchProductView(ListView):
+    template_name = "search/view.html"
 
     def get_context_data(self, *args, **kwargs):
-        context = super(SearchView, self).get_context_data(*args, **kwargs)
+        context = super(SearchProductView, self).get_context_data(*args, **kwargs)
         query = self.request.GET.get('q')
         context['query'] = query
         return context
@@ -18,9 +18,5 @@ class SearchView(ListView):
         method_dict = request.GET
         query = method_dict.get('q', None)
         if query is not None:
-            lookup = (Q(book_title__icontains=query) |
-                      Q(author__icontains=query) |
-                      Q(publication__icontains=query) |
-                      Q(subject__icontains=query))
-            return Book.objects.filter(lookup)
-        return Book.objects.none()
+            return Item.objects.search(query)
+        return Item.objects.featured()
