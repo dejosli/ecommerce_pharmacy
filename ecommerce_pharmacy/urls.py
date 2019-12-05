@@ -23,7 +23,8 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('', include('core.urls', namespace='core')),
     path('blog/', include('blog.urls', namespace='blog')),
-    path('summernote/', include('django_summernote.urls')),
+    path('', include('search.urls', namespace='search')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 if settings.DEBUG:
