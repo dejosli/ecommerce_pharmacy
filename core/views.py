@@ -18,6 +18,7 @@ import stripe
 
 # Create your views here.
 
+
 def create_ref_code():
     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=20))
 
@@ -344,6 +345,7 @@ class PaymentView(View):
         messages.warning(self.request, "Invalid data received")
         return redirect("/payment/stripe/")
 
+# HomePage View
 
 class HomeView(ListView):
     model = Item
@@ -363,10 +365,16 @@ class OrderSummaryView(LoginRequiredMixin, View):
             messages.warning(self.request, "You do not have an active order")
             return redirect("/")
 
+# Item Details  View
 
 class ItemDetailView(DetailView):
     model = Item
     template_name = "product.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['item_list'] = Item.objects.all()
+        return context
 
 
 @login_required

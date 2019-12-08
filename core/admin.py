@@ -1,14 +1,21 @@
 from django.contrib import admin
 
-from .models import Item, OrderItem, Order, Payment, Coupon, Refund, Address, UserProfile
+from .models import Item, OrderItem, Order, Payment, Coupon, Refund, Address, UserProfile, Category
 
 # Register your models here.
+
 
 def make_refund_accepted(modeladmin, request, queryset):
     queryset.update(refund_requested=False, refund_granted=True)
 
 
 make_refund_accepted.short_description = 'Update orders to refund granted'
+
+def make_items_active(modeladmin, request, queryset):
+    queryset.update(active=True)
+
+
+make_items_active.short_description = 'Active selected items'
 
 
 class OrderAdmin(admin.ModelAdmin):
@@ -56,7 +63,24 @@ class AddressAdmin(admin.ModelAdmin):
     search_fields = ['user', 'street_address', 'apartment_address', 'zip']
 
 
-admin.site.register(Item)
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ['title', 'price', 'discount_price', 'category', 'active']
+    list_filter = ['price', 'discount_price', 'category', 'active']
+    list_editable = ['price', 'discount_price', 'active']
+    list_display_links = ['title']
+    search_fields = ['title', 'price', 'category__name']
+    prepopulated_fields = {'slug': ('title',)}
+    actions = [make_items_active]
+
+
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['name', 'slug']
+    list_display_links = ['name']
+    prepopulated_fields = {'slug': ('name',)}
+
+
+admin.site.register(Category, CategoryAdmin)
+admin.site.register(Item, ItemAdmin)
 admin.site.register(OrderItem)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Payment)

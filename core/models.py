@@ -7,7 +7,7 @@ from django_countries.fields import CountryField
 from django.db.models import Q
 
 # Create your models here.
-
+'''
 CATEGORY_CHOICES = (
     ('AL', 'Analgesics'),
     ('AT', 'Antacids'),
@@ -50,7 +50,7 @@ CATEGORY_CHOICES = (
     ('T', 'Tranquilizer'),
     ('V', 'Vitamins'),
 )
-
+'''
 LABEL_CHOICES = (
     ('P', 'primary'),
     ('S', 'secondary'),
@@ -73,6 +73,24 @@ class UserProfile(models.Model):
         return self.user.username
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True)
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'category'
+        verbose_name_plural = 'categories'
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('search:item_list_by_category', kwargs={
+            'slug': self.slug
+        })
+
+
 class ItemQuerySet(models.query.QuerySet):
     def active(self):
         return self.filter(active=True)
@@ -80,11 +98,14 @@ class ItemQuerySet(models.query.QuerySet):
     def featured(self):
         return self.filter(featured=True, active=True)
 
+    def category(self, query):
+        return self.filter(active=True, category=query)
+
     def search(self, query):
         lookups = (Q(title__icontains=query) |
                    Q(description__icontains=query) |
                    Q(price__icontains=query) |
-                   Q(category__icontains=query)
+                   Q(category__name__icontains=query)
                    )
 
         return self.filter(lookups).distinct()
@@ -97,7 +118,7 @@ class ItemManager(models.Manager):
     def all(self):
         return self.get_queryset().active()
 
-    def featured(self):  
+    def featured(self):
         return self.get_queryset().featured()
 
     def get_by_id(self, id):
@@ -110,11 +131,16 @@ class ItemManager(models.Manager):
     def search(self, query):
         return self.get_queryset().active().search(query)
 
+    def category(self, query):
+        return self.get_queryset().category(query)
+
+
 class Item(models.Model):
     title = models.CharField(max_length=120)
     price = models.FloatField()
     discount_price = models.FloatField(blank=True, null=True)
-    category = models.CharField(choices=CATEGORY_CHOICES, max_length=2)
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, related_name='items')
     label = models.CharField(choices=LABEL_CHOICES, max_length=1)
     slug = models.SlugField()
     description = models.TextField()

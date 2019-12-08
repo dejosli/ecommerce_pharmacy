@@ -23,7 +23,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('', include('core.urls', namespace='core')),
     path('blog/', include('blog.urls', namespace='blog')),
-    path('s/', include('search.urls', namespace='search')),
+    path('', include('search.urls', namespace='search')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
@@ -33,3 +33,4 @@ if settings.DEBUG:
 # django admin site custom header and title
 admin.site.site_header = "PHARMACY::ONLINE STORE:: ADMIN"
 admin.site.site_title  = "PHARMACY::ONLINE STORE:: ADMIN PORTAL"
+admin.site.index_title = "WELCOME TO PHARMACY::ONLINE STORE:: ADMINISTRATION"
