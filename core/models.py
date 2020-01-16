@@ -7,50 +7,7 @@ from django_countries.fields import CountryField
 from django.db.models import Q
 
 # Create your models here.
-'''
-CATEGORY_CHOICES = (
-    ('AL', 'Analgesics'),
-    ('AT', 'Antacids'),
-    ('AD', 'Antianxiety Drugs'),
-    ('AA', 'Antiarrhythmics'),
-    ('AB', 'Antibacterials'),
-    ('AC', 'Antibiotics'),
-    ('CT', 'Anticoagulants and Thrombolytics'),
-    ('AC', 'Anticonvulsants'),
-    ('TD', 'Antidepressants'),
-    ('DA', 'Antidiarrheals'),
-    ('AM', 'Antiemetics'),
-    ('AF', 'Antifungals'),
-    ('AH', 'Antihistamines'),
-    ('HP', 'Antihypertensives'),
-    ('AI', 'Anti-Inflammatories'),
-    ('AN', 'Antineoplastics'),
-    ('PC', 'Antipsychotics'),
-    ('AP', 'Antipyretics'),
-    ('AV', 'Antivirals'),
-    ('B', 'Barbiturates'),
-    ('BB', 'Beta-Blockers'),
-    ('BC', 'Bronchodilators'),
-    ('CC', 'Cold Cures'),
-    ('CT', 'Corticosteroids'),
-    ('CS', 'Cough Suppressants'),
-    ('C', 'Cytotoxics'),
-    ('DC', 'Decongestants'),
-    ('D', 'Diuretics'),
-    ('E', 'Expectorant'),
-    ('H', 'Hormones'),
-    ('HG', 'Hypoglycemics'),
-    ('I', 'Immunosuppressives'),
-    ('L', 'Laxatives'),
-    ('MR', 'Muscle Relaxants'),
-    ('S', 'Sedatives'),
-    ('SF', 'Sex Hormones(Female)'),
-    ('SM', 'Sex Hormones(Male)'),
-    ('SD', 'Sleeping Drugs'),
-    ('T', 'Tranquilizer'),
-    ('V', 'Vitamins'),
-)
-'''
+
 LABEL_CHOICES = (
     ('P', 'primary'),
     ('S', 'secondary'),
@@ -149,6 +106,9 @@ class Item(models.Model):
     active = models.BooleanField(default=True)
 
     objects = ItemManager()
+
+    class Meta:
+        ordering = ('category',)
 
     def __str__(self):
         return self.title

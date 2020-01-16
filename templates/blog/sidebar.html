@@ -1,21 +1,41 @@
 {% block sidebar %}
-
+{% load static %}
 <style>
-        .card{
-            box-shadow: 0 16px 48px #E3E7EB;
-        }
+    .card {
+        box-shadow: 0 16px 48px #E3E7EB;
+    }
 </style>
 
 <!-- Sidebar Widgets Column -->
 <div class="col-md-4 float-right ">
-<div class="card my-4">
-    <h5 class="card-header">About Us</h5>
-    <div class="card-body">
-        <p class="card-text"> This awesome blog is made on the top of our Favourite full stack Framework 'Django', follow up the tutorial to learn how we made it..!</p>
-        <a href="https://djangocentral.com/building-a-blog-application-with-django"
-           class="btn btn-danger">Know more!</a>
+    <!-- Categories Widget -->
+    <div class="card my-4">
+        <h5 class="card-header">Categories</h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6">
+                    <ul class="list-unstyled mb-0">
+                        {% for post in object_list %}
+                        <li>
+                            <a href="{% url 'blog:post_list_by_category' post.category %}">{{post.category|title}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            </div>
+        </div>
     </div>
-</div>
+
+    <div class="card my-4">
+        <h5 class="card-header">About Us</h5>
+        <div class="card-body">
+            <p class="card-text"> In Pharmecy.uz you can find many types of drugs easily and quickly. This project is
+                able to give you all necessary information you’d want to. In addition...</p>
+            <a href="{% url 'about' %}" class="btn btn-danger">Know
+                more!</a>
+        </div>
+    </div>
 </div>
 
 {% endblock sidebar %}

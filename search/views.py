@@ -34,7 +34,7 @@ class SearchCategoryView(ListView):
 
         self.category = get_object_or_404(
             Category, name=self.kwargs['category'])
-        return Item.objects.filter(category=self.category)
+        return Item.objects.filter(category=self.category, active=True)
 
     def get_context_data(self, **kwargs):
 

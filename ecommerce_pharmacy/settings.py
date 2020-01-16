@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'crispy_forms',
     'django_summernote',
     'django_countries',
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'core',
     'blog',
     'search',
+    'contact',
 ]
 
 MIDDLEWARE = [
@@ -93,6 +95,14 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+]
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -115,8 +125,24 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend'
 )
+
+#django-allauth Configuration
+ACCOUNT_AUTHENTICATION_METHOD='username_email'
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS=3
+ACCOUNT_USERNAME_REQUIRED=True
+ACCOUNT_EMAIL_REQUIRED=True
+ACCOUNT_UNIQUE_EMAIL=True
+
 SITE_ID = 1
+
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+#STRIPE_PUBLIC_KEY = ''
+#STRIPE_SECRET_KEY = ''
+STRIPE_SECRET_KEY = 'sk_test_UsQNlpqdby5RO0nbNl1d4Eyz00z3yWYnGW'
+#STRIPE_PUBLISHABLE_KEY = 'pk_test_pMQyEVqD7Nab9Up8eHNb2euQ00JogrZfgG'
+#STRIPE_CONNECT_CLIENT_ID = 'ca_GOAGQG0mUlvApnutrn4QyfIuNzm1Df5t'
 
 
 # Internationalization
@@ -215,3 +241,10 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+
+
+# Email-Backend Configuration
+# EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
+

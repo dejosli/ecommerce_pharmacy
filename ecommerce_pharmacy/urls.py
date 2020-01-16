@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from blog.views import about_view, service_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,6 +26,9 @@ urlpatterns = [
     path('blog/', include('blog.urls', namespace='blog')),
     path('', include('search.urls', namespace='search')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('about/', about_view, name='about'),
+    path('services/', service_view, name='services'),
+    path('contact/', include('contact.urls', namespace='contact')),
 ]
 
 if settings.DEBUG:

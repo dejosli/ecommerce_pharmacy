@@ -65,8 +65,8 @@ class AddressAdmin(admin.ModelAdmin):
 
 class ItemAdmin(admin.ModelAdmin):
     list_display = ['title', 'price', 'discount_price', 'category', 'active']
-    list_filter = ['price', 'discount_price', 'category', 'active']
-    list_editable = ['price', 'discount_price', 'active']
+    list_filter = ['category', 'active']
+    list_editable = ['price', 'discount_price', 'active', 'category']
     list_display_links = ['title']
     search_fields = ['title', 'price', 'category__name']
     prepopulated_fields = {'slug': ('title',)}

@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head_title %}Services{% endblock %}
+
+{% block content %}
+<!-- section start -->
+<!-- ================ -->
+<div class="container">
+    <div id="services" class="section translucent-bg">
+        <div class="object-non-visible" data-animation-effect="fadeIn">
+            <h1 class="text-center title">Services</h1>
+            <div class="space"></div>
+            <div style="font-size: 20px;" class="row">
+                <div class="col-sm-6">
+                    <div class="media">
+                        <div class="media-body text-right">
+                            <h4 class="media-heading">Service 1</h4>
+                            <p>&emsp;&emsp;&emsp;First of all, you must register yourself in our website or contact us.
+                            </p>
+                        </div>
+                        <div class="media-right">
+                            <i class="fa fa-check"></i>
+                        </div>
+                    </div><br>
+                    <div class="media">
+                        <div class="media-body text-right">
+                            <h4 class="media-heading">Service 2</h4>
+                            <p>&emsp;&emsp;&emsp;Then we will inform that you are registered successfully. </p>
+                        </div>
+                        <div class="media-right">
+                            <i class="fa fa-desktop"></i>
+                        </div>
+                    </div><br>
+                    <div class="media">
+                        <div class="media-body text-right">
+                            <h4 class="media-heading">Service 3</h4>
+                            <p>&emsp;&emsp;&emsp;You will join among our users and have enormous conveniences. </p>
+                        </div>
+                        <div class="media-right">
+                            <i class="fa fa-child"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="space visible-xs"></div>
+                <div class="col-sm-6">
+                    <div class="media">
+                        <div class="media-left">
+                            <i class="fa fa-leaf"></i>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">Service 4</h4>
+                            <p>Any user of our website can increase diversity of medicines.</p>
+                        </div>
+                    </div><br>
+                    <div class="media">
+                        <div class="media-left">
+                            <i class="fa fa-area-chart"></i>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">Service 5</h4>
+                            <p>Moreover, you can manage a list of medicines and information in your profile.</p>
+                        </div>
+                    </div><br>
+                    <div class="media">
+                        <div class="media-left">
+                            <i class="fa fa-users"></i>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">Service 6</h4>
+                            <p>Extend your clients through our website as well as profit. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- section end -->
+<style>
+    .section {
+        background-color: #ffffff;
+        padding: 80px 0;
+    }
+
+    .object-non-visible {
+        opacity: 100;
+        filter: alpha(opacity=0);
+    }
+
+    .object-visible,
+    .touch .object-non-visible {
+        opacity: 100 !important;
+        filter: alpha(opacity=100) !important;
+    }
+
+    /* Targeting only Firefox for smoothest animations */
+    @-moz-document url-prefix() {
+
+        .object-visible,
+        .touch .object-non-visible {
+            -webkit-transition: opacity 0.6s ease-in-out;
+            -moz-transition: opacity 0.6s ease-in-out;
+            -o-transition: opacity 0.6s ease-in-out;
+            -ms-transition: opacity 0.6s ease-in-out;
+            transition: opacity 0.6s ease-in-out;
+        }
+    }
+
+    .space {
+        padding: 20px 0;
+    }
+
+    .media .fa {
+        font-size: 24px;
+        width: 40px;
+        height: 25px;
+        line-height: 25px;
+        padding: 0 5px;
+        text-align: center;
+    }
+
+    .translucent-bg {
+        -webkit-background-size: cover !important;
+        -moz-background-size: cover !important;
+        -o-background-size: cover !important;
+        background-size: cover !important;
+        background-position: 50% 0;
+        background-repeat: no-repeat;
+        z-index: 1;
+        position: relative;
+    }
+</style>
+{% endblock content %}

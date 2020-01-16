@@ -9,12 +9,12 @@ from django.views.generic import ListView, DetailView, View
 from django.shortcuts import redirect
 from django.utils import timezone
 from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm
-from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile
+from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Category
 
 import random
 import string
 import stripe
-#stripe.api_key = settings.STRIPE_SECRET_KEY
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 # Create your views here.
 
@@ -28,6 +28,13 @@ def products(request):
         'items': Item.objects.all()
     }
     return render(request, "products.html", context)
+
+
+class CategoryView(ListView):
+    model = Category
+    queryset = Category.objects.all()
+    paginate_by = 10
+    template_name = "home.html"
 
 
 def is_valid_form(values):
@@ -347,9 +354,10 @@ class PaymentView(View):
 
 # HomePage View
 
+
 class HomeView(ListView):
     model = Item
-    paginate_by = 10
+    paginate_by = 12
     template_name = "home.html"
 
 
@@ -366,6 +374,7 @@ class OrderSummaryView(LoginRequiredMixin, View):
             return redirect("/")
 
 # Item Details  View
+
 
 class ItemDetailView(DetailView):
     model = Item

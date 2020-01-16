@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head_title %}About{% endblock %}
+
+{% block content %}
+<!-- section start -->
+<!-- ================ -->
+<div class="container">
+    <div id="about" class="section clearfix object-non-visible" data-animation-effect="fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 id="about" class="title text-center">About <span>Pharmacy.uz</span></h1>
+                <br>
+                <div class="space"></div>
+                <div style="font-size: 20px;" class="row">
+                    <div class="col-md-6">
+                        <img src="{% static 'img/lp1.png' %}" alt="here">
+                        <div class="space"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <p>In <strong>Pharmecy.uz</strong> you can find many types of drugs easily and quickly. This
+                            project
+                            is
+                            able to give you all necessary information you’d want to. In addition to this, the site is
+                            configured
+                            in three languages that give users convenience. </p><br>
+                        <p>The main objectives of the web site:</p><br>
+                        <ul class="list-unstyled">
+                            <li><i class="fa fa-caret-right pr-10 text-colored"></i> Creating easy and fast search
+                                system
+                                for
+                                guests and users</li>
+                            <li><i class="fa fa-caret-right pr-10 text-colored"></i> Giving an opportunity of finding
+                                the
+                                medicines where and in which pharmacy. </li>
+                            <li><i class="fa fa-caret-right pr-10 text-colored"></i> Making contacts with pharmacies
+                            </li>
+                        </ul><br>
+                        <p>If you have any opinion about our website, feel free to email us through pharmacy.uz@gmail.com</p>
+                        <br><br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- section end -->
+<style>
+    .section {
+        background-color: #ffffff;
+        padding: 80px 0;
+    }
+
+    .object-non-visible {
+        opacity: 100;
+        filter: alpha(opacity=0);
+    }
+
+    .object-visible,
+    .touch .object-non-visible {
+        opacity: 100 !important;
+        filter: alpha(opacity=100) !important;
+    }
+
+    /* Targeting only Firefox for smoothest animations */
+    @-moz-document url-prefix() {
+
+        .object-visible,
+        .touch .object-non-visible {
+            -webkit-transition: opacity 0.6s ease-in-out;
+            -moz-transition: opacity 0.6s ease-in-out;
+            -o-transition: opacity 0.6s ease-in-out;
+            -ms-transition: opacity 0.6s ease-in-out;
+            transition: opacity 0.6s ease-in-out;
+        }
+    }
+
+    .space {
+        padding: 20px 0;
+    }
+
+    .media .fa {
+        font-size: 24px;
+        width: 40px;
+        height: 25px;
+        line-height: 25px;
+        padding: 0 5px;
+        text-align: center;
+    }
+
+    .translucent-bg {
+        -webkit-background-size: cover !important;
+        -moz-background-size: cover !important;
+        -o-background-size: cover !important;
+        background-size: cover !important;
+        background-position: 50% 0;
+        background-repeat: no-repeat;
+        z-index: 1;
+        position: relative;
+    }
+</style>
+{% endblock content %}

@@ -3,6 +3,8 @@ from django.views import generic
 from blog.models import Post
 from blog.forms import CommentForm
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, DetailView, View
+from .models import Post, PostCategory
 
 # Create your views here.
 
@@ -16,6 +18,7 @@ class PostList(generic.ListView):
 def post_detail(request, slug):
     template_name = 'blog/post_detail.html'
     post = get_object_or_404(Post, slug=slug)
+    query = Post.objects.filter(status=1)
     comments = post.comments.filter(active=True)
     new_comment = None
     # Comment posted
@@ -34,4 +37,38 @@ def post_detail(request, slug):
     return render(request, template_name, {'post': post,
                                            'comments': comments,
                                            'new_comment': new_comment,
-                                           'comment_form': comment_form})
+                                           'comment_form': comment_form,
+                                           'query':query})
+
+
+def about_view(request):
+    template_name = 'about.html'
+    context = {}
+    return render(request, template_name, context)
+
+
+def service_view(request):
+    template_name = 'services.html'
+    context = {}
+    return render(request, template_name, context)
+
+
+class SearchPostCategoryView(ListView):
+
+    template_name = "blog/allblogs.html"
+
+    def get_queryset(self):
+        model = Post
+
+        self.category = get_object_or_404(
+            PostCategory, name=self.kwargs['category'])
+        return Post.objects.filter(category=self.category)
+
+    def get_context_data(self, **kwargs):
+
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in the publisher
+        context['category'] = self.category
+        return context
+

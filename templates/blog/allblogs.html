@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-
+{% load static %}
+{% block head_title %}Blogs{% endblock %}
 {% block content %}
 <style>
     body {
@@ -33,31 +34,46 @@
     .card {
         box-shadow: 0 16px 48px #E3E7EB;
     }
+
+    .jumbotron {
+        background: #358CCE;
+        color: #FFF;
+        border-radius: 0px;
+    }
+
+    .jumbotron-sm {
+        padding-top: 24px;
+        padding-bottom: 24px;
+    }
+
+    .jumbotron small {
+        color: #FFF;
+    }
+
+    .h1 small {
+        font-size: 24px;
+    }
 </style>
 
 
 <div class="container">
-    <header class="masthead">
-        <div class="overlay"></div>
+    <div class="jumbotron jumbotron-sm">
         <div class="container">
             <div class="row">
-                <div class=" col-md-8 col-md-10 mx-auto">
-                    <div class="site-heading">
-                        <h3 class=" site-heading my-4 mt-3 text-white"> Welcome to my awesome Blog </h3>
-                        <p class="text-light">We Love Django As much as you do..! &nbsp
-                        </p>
-                    </div>
+                <div class="col-sm-12 col-lg-12">
+                    <h1 class="h1">
+                        Our Blog <small>Fight the Fight, Find the Cure!</small></h1>
                 </div>
             </div>
         </div>
-    </header>
+    </div>
     <div class="row">
         <!-- Blog Entries Column -->
         <div class="col-md-8 mt-3 left">
             {% for post in post_list %}
             <div class="card mb-4">
                 <div class="card-body">
-                    <h2 class="card-title">{{ post.title }}</h2>
+                    <h2 class="card-title">{{ post.title|title }}</h2>
                     <p class="card-text text-muted h6">{{ post.author }} | {{ post.created_on}} </p>
                     <p class="card-text">{{ post.content | safe}}</p>
                     <a href="{% url 'blog:post_detail' post.slug  %}" class="btn btn-primary">Read More &rarr;</a>
